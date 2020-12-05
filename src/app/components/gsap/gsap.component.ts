@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { gsap, Power4 } from 'gsap';
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { Flip } from 'gsap/dist/Flip';
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(Flip);
 
 
 @Component({
@@ -10,7 +10,13 @@ gsap.registerPlugin(ScrollTrigger);
   templateUrl: './gsap.component.html',
   styleUrls: ['./gsap.component.scss']
 })
-export class GsapComponent implements OnInit {
+export class GsapComponent implements OnInit, AfterViewInit {
+
+  @ViewChild("text")
+  text: ElementRef;
+
+  @ViewChild("square") square: ElementRef;
+
 
   isFullScreen = false;
   scaler = 1.5;
@@ -23,20 +29,33 @@ export class GsapComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
+  }
+
+  ngAfterViewInit(){
+    
+    gsap.from ( 
+      this.text.nativeElement, {
+        duration:2,
+        opacity:0,
+        y:"+=50"
+      }
+    )
   }
 
   onSquare(_event:any){
 
-    console.log('mouseclick target', _event.target);
-    
-    const state = Flip.getState(_event.target);
+    console.log('mouseclick target', _event.target);  
+    const state = Flip.getState(this.square.nativeElement);
+    console.log('square element', this.square.nativeElement);  
   
     // If the box is opening, use custom durations and easings for some properties
     let customVars = {};
 
-    console.log('igfs', this.isFullScreen );
+    console.log('isFullScreen', this.isFullScreen );
     this.isFullScreen = !this.isFullScreen;
-    console.log('igfs', this.isFullScreen );
+    console.log('isFullScreen', this.isFullScreen );
     
     if(this.isFullScreen) {
       customVars = {
