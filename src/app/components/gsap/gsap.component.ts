@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { gsap, Power4 } from 'gsap';
-import { Flip } from "gsap/dist/Flip";
-gsap.registerPlugin(Flip);
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { Flip } from 'gsap/dist/Flip';
+gsap.registerPlugin(ScrollTrigger);
 
 
 @Component({
@@ -21,11 +22,12 @@ export class GsapComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   onSquare(_event:any){
 
-    console.log('event', _event.target);
+    console.log('mouseclick target', _event.target);
     
     const state = Flip.getState(_event.target);
   
